@@ -1,8 +1,6 @@
-import http from 'http';
 import express from 'express';
 
 import App from './src/server';
-// console.log(App, "====App====");
 
 const app = express();
 app.use(express.static(__dirname));

@@ -1,13 +1,20 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
+const hash = Math.random().toString();
+const webpack = require('webpack');
 
 module.exports = {
     mode: 'development',
     // entry: './src/client.js',
-    entry: './index.js',
+    entry: {
+        client:'./src/client.js',
+        server: './index.js'
+    },
     output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        filename: `${hash}.[id].bundle.js`,
+        path: path.resolve(__dirname, 'dist'),
+        hashSalt: Math.random().toString()
     },
     module: {
         rules: [
@@ -28,6 +35,14 @@ module.exports = {
             }
         ]
     },
+    plugins: [new HtmlWebpackPlugin({
+        title: 'My App',
+        template: './src/index.html'
+    }),
+    new webpack.DefinePlugin({
+        HASH: hash
+     })
+    ],
     node: {
         fs: 'empty',
         net: 'empty'

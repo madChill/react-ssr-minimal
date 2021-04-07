@@ -3,15 +3,23 @@ import Home from './containers/home/index.jsx';
 import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import Hello from './components/hellomsg.jsx';
-// import Hello from './components/hellomsg';
+// import Hello from './components/hellomsg.jsx';
+import App from './containers/app';
 
-var HelloMessage = React.createFactory(Hello);
 export default `
-  <div id="react-root">
-    ${ReactDOMServer.renderToStaticMarkup(HelloMessage({ name: 'John' }))}
-  </div>
-  <script src="/dist/bundle.js"></script>
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8" />
+     <title>Getting Started</title>
+     <title>Asset Management</title>
+    </head>
+    <body>
+        <div id="react-root">
+          ${ReactDOMServer.renderToStaticMarkup(<App/>)}
+        </div>
+      </body>
+  </html>
 `;
 
 const App = () => {
@@ -32,9 +40,8 @@ const counterApp = (state = [], action) => {
     }
 };
 const store = createStore(counterApp, ['Redux 1']);
-console.log(store);
-const preloadedState = store.getState();
 
+const preloadedState = store.getState();
 function renderFullPage(html, preloadedState) {
     return `
       <!doctype html>

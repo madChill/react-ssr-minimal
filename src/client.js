@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Hello from './components/hellomsg.jsx';
+// import Hello from './components/hellomsg.jsx';
+import App from "./containers/app/index.js";
 
-ReactDOM.render(<Hello />, document.getElementById('react-root'));
+ReactDOM.render(<App />, document.getElementById('react-root'));
