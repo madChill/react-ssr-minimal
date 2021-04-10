@@ -5,7 +5,7 @@
     "main": "index.js",
     "homepage": ".",
     "scripts": {
-        "dev": "nodemon --inspect -x \"npm run build\" --exec babel-node index.js",
+        "dev": "nodemon --inspect -x \"npm run build\" --exec babel-node bin/dev.js",
         "webpack": "npx webpack --config webpack.config.js",
         "build": "babel src --out-dir dist-server",
         "build2": "babel src2 --out-dir dist-server2",
@@ -21,17 +21,14 @@
         "@babel/node": "^7.13.12",
         "@babel/preset-env": "^7.13.12",
         "@babel/preset-react": "^7.12.13",
-        "@webpack-cli/serve": "^1.3.1",
-        "babel-jest": "^26.6.3",
         "babel-loader": "^8.2.2",
         "css-loader": "^5.2.0",
         "eslint": "^7.22.0",
-        "html-webpack-plugin": "^4.5.2",
         "nodemon": "^2.0.7",
         "style-loader": "^2.0.0",
-        "webpack": "^4.42.0",
-        "webpack-cli": "^4.3.0",
-        "webpack-dev-server": "^3.11.2"
+        "webpack": "^5.4.0",
+        "webpack-dev-middleware": "^4.0.2",
+        "webpack-cli": "^4.2.0"
     },
     "dependencies": {
         "express": "^4.17.1",

@@ -1,18 +1,21 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
 const hash = Math.random().toString();
 const webpack = require('webpack');
+const bundleJsFile = require('./bin/plugin/bundleJsFile.js');
 
 module.exports = {
     mode: 'development',
-    // entry: './src/client.js',
     entry: {
-        client:'./src/client.js',
-        server: './index.js'
+        client: './src/client.js',
+        server: './src/server.js'
     },
     output: {
-        filename: `${hash}.[id].bundle.js`,
+        filename: function (pathData) {
+            return pathData.chunk.name === 'server'
+                ? '[name].js'
+                : '[name]/[hash].[name].js';
+        },
         path: path.resolve(__dirname, 'dist'),
         hashSalt: Math.random().toString()
     },
@@ -23,7 +26,6 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             },
             {
-                // |ts|tsx
                 test: /\.(js|mjs|jsx)$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
@@ -35,21 +37,21 @@ module.exports = {
             }
         ]
     },
-    plugins: [new HtmlWebpackPlugin({
-        title: 'My App',
-        template: './src/index.html'
-    }),
-    new webpack.DefinePlugin({
-        HASH: hash
-     })
-    ],
-    node: {
-        fs: 'empty',
-        net: 'empty'
+    resolve: {
+        extensions: ['.js', '.jsx']
     },
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        compress: true,
-        port: 9000
-    }
+    plugins: [
+        // new HtmlWebpackPlugin({
+        //     title: 'My App',
+        //     template: './src/index.html'
+        // }),
+        new bundleJsFile({})
+        // new webpack.DefinePlugin({
+        //     HASH: hash
+        // })
+    ]
+    // node: {
+    //     fs: 'empty',
+    //     net: 'empty'
+    // }
 };

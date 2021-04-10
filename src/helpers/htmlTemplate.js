@@ -1,24 +1,17 @@
-export default {
-     server: `<!DOCTYPE html>
-     <html>
-       <head>
-         <meta charset="utf-8" />
-        <title>Getting Started</title>
-        <title>Asset Management</title>
-       </head>
-       <body>
-           <div id="react-root"><h1>react-ssr-minimal</h1></div>
-         </body>
-     </html>`,
-     client: `<!DOCTYPE html>
-     <html>
-       <head>
-         <meta charset="utf-8" />
-        <title>Getting Started</title>
-        <title>Asset Management</title>
-       </head>
-       <body>
-           <div id="react-root"><h1>react-ssr-minimal</h1></div>
-         </body>
-     </html>`
-}
+import React from 'react';
+
+export default ({ script, children }) => {
+    return (
+        <html lang="en-us">
+            <head>
+                <meta charset="utf-8" />
+                <title>Getting Started</title>
+                <title>Asset Management</title>
+            </head>
+            <body>
+                <div id="react-root">{children}</div>
+            </body>
+            <script src={script} charSet="UTF-8" />
+        </html>
+    );
+};

@@ -1,36 +1,25 @@
 import React from 'react';
-import Home from './containers/home/index.jsx';
 import ReactDOMServer from 'react-dom/server';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-// import Hello from './components/hellomsg.jsx';
-import App from './containers/app';
+// import { Provider } from 'react-redux';
+// import { createStore } from 'redux';
+import App from './containers/App/';
+import HtmlHelmet from './helpers/htmlTemplate';
 
-export default `
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="utf-8" />
-     <title>Getting Started</title>
-     <title>Asset Management</title>
-    </head>
-    <body>
-        <div id="react-root">
-          ${ReactDOMServer.renderToStaticMarkup(<App/>)}
-        </div>
-      </body>
-  </html>
-`;
-
-const App = () => {
-    return (
-        <div>
-            <Provider store={store}>
-                <Home />
-            </Provider>
-        </div>
+const serverSideApp = ({ hash }) => {
+    const clientFile = `client/${hash}.client.js`;
+    const content = ReactDOMServer.renderToStaticMarkup(
+        <HtmlHelmet script={clientFile}>
+            <App />
+        </HtmlHelmet>
     );
+    return `
+    <!DOCTYPE html>
+      ${content}
+  `;
 };
+
+module.exports = serverSideApp;
+
 const counterApp = (state = [], action) => {
     switch (action.type) {
         case 'ADD':
@@ -39,9 +28,7 @@ const counterApp = (state = [], action) => {
             return state;
     }
 };
-const store = createStore(counterApp, ['Redux 1']);
 
-const preloadedState = store.getState();
 function renderFullPage(html, preloadedState) {
     return `
       <!doctype html>
