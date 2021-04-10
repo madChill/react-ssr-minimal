@@ -7,9 +7,8 @@
     "scripts": {
         "dev": "nodemon --inspect -x \"npm run build\" --exec babel-node bin/dev.js",
         "webpack": "npx webpack --config webpack.config.js",
-        "build": "babel src --out-dir dist-server",
-        "build2": "babel src2 --out-dir dist-server2",
-        "prod": "webpack-dev-server --mode production",
+        "build": "npx webpack --env production --config webpack.config.js",
+        "prod": "nodemon dist/server.js",
         "test": "echo \"No test specified\" && exit 0"
     },
     "keywords": [],
