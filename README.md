@@ -1,4 +1,4 @@
-# minimal server side rendering
+# minimal react server side rendering
 
 ## Quick Overview
 
@@ -16,7 +16,7 @@ clone the repository then:
 
 `npm run build` (to build the code)
 
-`npm runstart` (to run the code production after build)
+`npm run prod` (to run the code production after build)
 
 ## Features
 

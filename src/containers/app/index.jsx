@@ -7,12 +7,12 @@ export default () => {
     return (
         <StaticRouter>
             <Helmet
-                titleTemplate="%s - React.js Boilerplate"
-                defaultTitle="React.js Boilerplate"
+                titleTemplate="%s - minimal react server side rendering"
+                defaultTitle="minimal react server side rendering"
             >
                 <meta
                     name="description"
-                    content="A React.js Boilerplate application"
+                    content="minimal react server side rendering application"
                 />
             </Helmet>
             <Switch>

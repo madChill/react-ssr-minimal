@@ -6,14 +6,11 @@
     "homepage": ".",
     "scripts": {
         "dev": "nodemon --inspect -x \"npm run build\" --exec babel-node bin/dev.js",
-        "webpack": "npx webpack --config webpack.config.js",
+        "client": "npx webpack serve  --config webpack.client.js ",
         "build": "npx webpack --env production --config webpack.config.js",
         "prod": "nodemon dist/server.js",
         "test": "echo \"No test specified\" && exit 0"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
     "devDependencies": {
         "@babel/cli": "^7.13.10",
         "@babel/core": "^7.13.10",
@@ -23,21 +20,26 @@
         "babel-loader": "^8.2.2",
         "css-loader": "^5.2.0",
         "eslint": "^7.22.0",
+        "html-webpack-plugin": "^5.3.1",
         "nodemon": "^2.0.7",
         "style-loader": "^2.0.0",
         "webpack": "^5.4.0",
+        "webpack-cli": "^4.2.0",
         "webpack-dev-middleware": "^4.0.2",
-        "webpack-cli": "^4.2.0"
+        "webpack-dev-server": "^3.11.2"
     },
     "dependencies": {
+        "connected-react-router": "^6.9.1",
         "express": "^4.17.1",
+        "history": "^5.0.0",
         "prop-types": "^15.7.2",
         "react": "^16.13.0",
         "react-dom": "^16.13.0",
         "react-helmet": "^6.1.0",
         "react-redux": "^7.2.3",
         "react-router-dom": "^5.2.0",
-        "redux": "^4.0.5"
+        "redux": "^4.0.5",
+        "styled-components": "^5.2.3"
     },
     "nodemonConfig": {
         "ignore": [

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 // import { Provider } from 'react-redux';
 // import { createStore } from 'redux';
-import App from './containers/App';
+import App from './App';
 import HtmlHelmet from './helpers/htmlTemplate';
 
 const serverSideApp = ({ hash }) => {
