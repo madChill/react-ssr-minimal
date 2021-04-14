@@ -2,9 +2,13 @@ const path = require('path');
 
 module.exports = (env) => {
     const pathServer = env.production ? './bin/prod.js' : './src/server.js';
+    const devtool = env.production ? null : 'inline-source-map';
+    const mode = env.production ? 'production' : 'development';
     return {
+        mode,
         target: 'node',
         cache: false,
+        devtool,
         entry: {
             client: './src/client.js',
             server: pathServer

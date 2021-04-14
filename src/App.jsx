@@ -5,9 +5,9 @@ import { ConnectedRouter } from 'connected-react-router';
 import storeConfig, { history } from './appStore';
 import App from './containers/App';
 import isServer from './helpers/isServer';
-const store = storeConfig();
 
-export default () => {
+export default (SSRData) => () => {
+    const store = storeConfig({ SSRData });
     return (
         <Provider store={store}>
             {isServer ? (

@@ -5,11 +5,12 @@ import ReactDOMServer from 'react-dom/server';
 import App from './App';
 import HtmlHelmet from './helpers/htmlTemplate';
 
-const serverSideApp = ({ hash }) => {
+const serverSideApp = ({ hash, req }) => {
     const clientFile = `client/${hash}.client.js`;
+    const AppServer = App(req.SSRData);
     const content = ReactDOMServer.renderToStaticMarkup(
         <HtmlHelmet script={clientFile}>
-            <App />
+            <AppServer />
         </HtmlHelmet>
     );
     return `
@@ -19,15 +20,6 @@ const serverSideApp = ({ hash }) => {
 };
 
 export default serverSideApp;
-
-const counterApp = (state = [], action) => {
-    switch (action.type) {
-        case 'ADD':
-            return state.concat([action.text]);
-        default:
-            return state;
-    }
-};
 
 function renderFullPage(html, preloadedState) {
     return `

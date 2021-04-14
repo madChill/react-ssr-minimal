@@ -1,9 +1,17 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { createBrowserHistory } from 'history';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
+import thunk from 'redux-thunk';
 
 import isServer from './helpers/isServer';
+import { reducer as homeReducer } from './containers/home/redux';
+
 export const history = isServer ? {} : createBrowserHistory();
+const api = 'https://60746332066e7e0017e79c40.mockapi.io/';
+export const key = {
+    HOME: 'HOME',
+    USERS: 'USERS'
+};
 
 const state = [
     {
@@ -28,22 +36,29 @@ const ToDoReducers = (initState = state, payload) => {
 };
 
 // this one to be check on server we do not have a history
-let router = {};
-let routerMiddlewareClient = routerMiddleware({});
-if (!isServer) {
-    router = connectRouter(history);
-    routerMiddlewareClient = routerMiddleware(history);
-}
+// let router = {};
+// let routerMiddlewareClient = routerMiddleware({});
+// if (!isServer) {
+//     router = connectRouter(history);
+//     routerMiddlewareClient = routerMiddleware(history);
+// }
 const rootReducers = () =>
     combineReducers({
-        router: router,
-        todo: ToDoReducers
+        router: connectRouter(history),
+        [key.HOME]: homeReducer
     });
 
-export default () => {
+// this logic init store after wait server get list users(server side middware express)
+export default ({ SSRData }) => {
     return createStore(
-        rootReducers(),
-        { todo: state },
-        compose(applyMiddleware(routerMiddlewareClient))
+        combineReducers({
+            router: connectRouter(history),
+            [key.HOME]: homeReducer
+        }),
+        { todo: state, [key.HOME]: SSRData },
+        applyMiddleware(
+            thunk.withExtraArgument(api, key),
+            routerMiddleware(history)
+        )
     );
 };
