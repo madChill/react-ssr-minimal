@@ -1,14 +1,14 @@
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (env) => {
     const pathServer = env.production ? './bin/prod.js' : './src/server.js';
-    const devtool = env.production ? null : 'inline-source-map';
+    const devtool = env.production ? {} : { devtool: 'inline-source-map' };
     const mode = env.production ? 'production' : 'development';
     return {
         mode,
         target: 'node',
         cache: false,
-        devtool,
         entry: {
             client: './src/client.js',
             server: pathServer
@@ -17,7 +17,7 @@ module.exports = (env) => {
             filename: function (pathData) {
                 return pathData.chunk.name === 'server'
                     ? '[name].js'
-                    : '[name]/[hash].[name].js';
+                    : 'public/[hash].[name].js';
             },
             path: path.resolve(__dirname, 'dist'),
             hashSalt: Math.random().toString()
@@ -47,9 +47,10 @@ module.exports = (env) => {
             extensions: ['.js', '.jsx']
         },
         plugins: [
-            // new webpack.DefinePlugin({
-            //     HASH: 'hash'
-            // })
-        ]
+            new CopyPlugin({
+                patterns: [{ from: 'public', to: 'public' }]
+            })
+        ],
+        ...devtool
     };
 };

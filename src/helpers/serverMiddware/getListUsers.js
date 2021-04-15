@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { api } from '../const';
 
-export default async (req, res, next) => {
+export default (req, res, next) => {
     return axios
         .get(api + '/todo')
         .then((resp) => {

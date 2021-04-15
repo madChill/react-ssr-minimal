@@ -1,4 +1,4 @@
-import { key } from '../../appStore';
+import { keyStore as key } from '../../helpers/const';
 import { getListTodo } from './effect';
 
 const INITIAL_STATE = {

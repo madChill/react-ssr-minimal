@@ -1,12 +1,19 @@
 const express = require('express');
 const serverSideAppContent = require('../src/server').default;
+const serverMiddware = require('../src/helpers/serverMiddware').default;
 
 const app = express();
+app.get('/server.js', function (req, res) {
+    res.writeHeader(200, { 'Content-Type': 'text/html' });
+    res.end('admin site');
+});
 app.use(express.static(__dirname));
+app.use(serverMiddware());
 
-app.get('/', function (req, res) {
+app.get('/:name', function (req, res) {
     const content = serverSideAppContent({
-        hash: __webpack_hash__
+        hash: __webpack_hash__,
+        req
     });
     res.writeHeader(200, { 'Content-Type': 'text/html' });
     res.end(content);

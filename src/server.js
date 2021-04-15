@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-// import { Provider } from 'react-redux';
-// import { createStore } from 'redux';
 import App from './App';
 import HtmlHelmet from './helpers/htmlTemplate';
 
 const serverSideApp = ({ hash, req }) => {
-    const clientFile = `client/${hash}.client.js`;
+    const clientFile = `/public/${hash}.client.js`;
     const AppServer = App(req.SSRData);
+    const preloadedState = req.SSRData;
     const content = ReactDOMServer.renderToStaticMarkup(
         <HtmlHelmet script={clientFile}>
             <AppServer />
@@ -15,33 +14,16 @@ const serverSideApp = ({ hash, req }) => {
     );
     return `
     <!DOCTYPE html>
+      <script>
+          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(
+              /</g,
+              '\\u003c'
+          )}
+        </script>
+        <link rel="icon" href="/public/favicon.ico" />
       ${content}
+
   `;
 };
 
 export default serverSideApp;
-
-function renderFullPage(html, preloadedState) {
-    return `
-      <!doctype html>
-      <html>
-        <head>
-          <title>Redux Universal Example</title>
-        </head>
-        <body>
-          <div id="root">${html}</div>
-          <script>
-            // WARNING: See the following for security issues around embedding JSON in HTML:
-            // https://redux.js.org/recipes/server-rendering/#security-considerations
-            window.__PRELOADED_STATE__ = ${JSON.stringify(
-                preloadedState
-            ).replace(/</g, '\\u003c')}
-          </script>
-          <script src="https://fb.me/react-0.14.0.js"></script>
-          <script src="https://fb.me/react-dom-0.14.0.js"></script>
-        </body>
-      </html>
-      `;
-}
-
-// export default renderFullPage(ReactDOMServer.renderToStaticMarkup(<App />), preloadedState);

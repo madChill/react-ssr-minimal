@@ -8,7 +8,7 @@
         "dev": "nodemon --inspect -x \"npm run build\" --exec babel-node bin/dev.js",
         "client": "npx webpack serve  --config webpack.client.js ",
         "build": "npx webpack --env production --config webpack.config.js",
-        "prod": "nodemon dist/server.js",
+        "start": "npx webpack --env production --config webpack.config.js && nodemon dist/server.js",
         "test": "echo \"No test specified\" && exit 0"
     },
     "devDependencies": {
@@ -18,6 +18,8 @@
         "@babel/preset-env": "^7.13.12",
         "@babel/preset-react": "^7.12.13",
         "babel-loader": "^8.2.2",
+        "babel-polyfill": "^6.26.0",
+        "copy-webpack-plugin": "^8.1.1",
         "css-loader": "^5.2.0",
         "eslint": "^7.22.0",
         "html-webpack-plugin": "^5.3.1",

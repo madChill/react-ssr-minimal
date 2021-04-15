@@ -7,7 +7,9 @@ const serverMiddware = require('../src/helpers/serverMiddware').default;
 const config = require('../webpack.config.js');
 const compiler = webpack(config({ mode: 'development' }));
 const app = express();
-app.use(express.static(__dirname));
+app.use(express.static('client'));
+app.use(express.static('public'));
+
 app.use(
     middleware(compiler, {
         serverSideRender: true
@@ -21,7 +23,7 @@ app.get('/admin', async function (req, res) {
 app.use(serverMiddware());
 
 // use get func instead of middware use func to prevent double call func callback in router
-app.get('/:n', function (req, res) {
+app.get('/:name', function (req, res) {
     const content = serverSideAppContent({
         hash: res.locals.webpack.devMiddleware.stats.hash,
         req

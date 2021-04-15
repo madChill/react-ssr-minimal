@@ -1,22 +1,19 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
 import storeConfig, { history } from './appStore';
 import App from './containers/App';
-import isServer from './helpers/isServer';
+import { isNode } from './helpers/const';
 
 export default (SSRData) => () => {
     const store = storeConfig({ SSRData });
+    const BindHistory = !isNode ? ConnectedRouter : Fragment;
     return (
         <Provider store={store}>
-            {isServer ? (
+            <BindHistory history={history}>
                 <App />
-            ) : (
-                <ConnectedRouter history={history}>
-                    <App />
-                </ConnectedRouter>
-            )}
+            </BindHistory>
         </Provider>
     );
 };

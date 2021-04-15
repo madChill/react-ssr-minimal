@@ -2,9 +2,15 @@
 
 ## Quick Overview
 
-This is a minimalistic starter app to benefit of the flexibility of Babel and of ES6, ES7+,
-if you you want to use the latest ECMAscript features (e.g. ES6 modules)
-without waiting for nodejs to support them natively, already configured with a custom .vscode to allow debugging inside Visual studio code IDE
+This is a minimal project for server side rendering with React js.
+
+### Server Rendering
+
+React component is rendered before sending to client in HTML for the first time.
+
+### Stack & How they work
+
+We use Express js for serve and route the server effect before fill up those data to React Component on server side
 
 ## Usage
 
@@ -18,8 +24,6 @@ clone the repository then:
 
 `npm run prod` (to run the code production after build)
 
-## Features
+## Explanation
 
--   **babel**: transpiling from ES6, ES7+ to ES5
--   **webpack**: compile typescript with ts-loader and bundling the source to a bundle.js
--   **live compiling**: as well as live reload
+For development mode we get run is `bin/dev.js` and then initiates 'server.js' in /src folder
