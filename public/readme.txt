@@ -1,0 +1,1 @@
+minimal ssr for react

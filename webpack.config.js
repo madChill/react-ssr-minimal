@@ -1,57 +1,56 @@
 const path = require('path');
-const fs = require('fs');
-const hash = Math.random().toString();
-const webpack = require('webpack');
-const bundleJsFile = require('./bin/plugin/bundleJsFile.js');
+const CopyPlugin = require('copy-webpack-plugin');
 
-module.exports = {
-    mode: 'development',
-    entry: {
-        client: './src/client.js',
-        server: './src/server.js'
-    },
-    output: {
-        filename: function (pathData) {
-            return pathData.chunk.name === 'server'
-                ? '[name].js'
-                : '[name]/[hash].[name].js';
+module.exports = (env) => {
+    const pathServer = env.production ? './bin/prod.js' : './src/server.js';
+    const devtool = env.production ? {} : { devtool: 'inline-source-map' };
+    const mode = env.production ? 'production' : 'development';
+    return {
+        mode,
+        target: 'node',
+        cache: false,
+        entry: {
+            client: './src/client.js',
+            server: pathServer
         },
-        path: path.resolve(__dirname, 'dist'),
-        hashSalt: Math.random().toString()
-    },
-    module: {
-        rules: [
-            {
-                test: /\.css$/i,
-                use: ['style-loader', 'css-loader']
+        output: {
+            filename: function (pathData) {
+                return pathData.chunk.name === 'server'
+                    ? '[name].js'
+                    : 'public/[hash].[name].js';
             },
-            {
-                test: /\.(js|mjs|jsx)$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react']
+            path: path.resolve(__dirname, 'dist'),
+            hashSalt: Math.random().toString()
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.css$/i,
+                    use: ['style-loader', 'css-loader']
+                },
+                {
+                    test: /\.(js|mjs|jsx)$/,
+                    exclude: /(node_modules|bower_components)/,
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                '@babel/preset-env',
+                                '@babel/preset-react'
+                            ]
+                        }
                     }
                 }
-            }
-        ]
-    },
-    resolve: {
-        extensions: ['.js', '.jsx']
-    },
-    plugins: [
-        // new HtmlWebpackPlugin({
-        //     title: 'My App',
-        //     template: './src/index.html'
-        // }),
-        new bundleJsFile({})
-        // new webpack.DefinePlugin({
-        //     HASH: hash
-        // })
-    ]
-    // node: {
-    //     fs: 'empty',
-    //     net: 'empty'
-    // }
+            ]
+        },
+        resolve: {
+            extensions: ['.js', '.jsx']
+        },
+        plugins: [
+            new CopyPlugin({
+                patterns: [{ from: 'public', to: 'public' }]
+            })
+        ],
+        ...devtool
+    };
 };
