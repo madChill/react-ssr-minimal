@@ -1,6 +1,6 @@
 const express = require('express');
 const serverSideAppContent = require('../src/server').default;
-const serverMiddware = require('../src/helpers/serverMiddware').default;
+const serverMiddleware = require('../src/helpers/serverMiddleware').default;
 
 const app = express();
 app.get('/server.js', function (req, res) {
@@ -8,7 +8,7 @@ app.get('/server.js', function (req, res) {
     res.end('admin site');
 });
 app.use(express.static(__dirname));
-app.use(serverMiddware());
+app.use(serverMiddleware());
 
 app.get('/:name', function (req, res) {
     const content = serverSideAppContent({

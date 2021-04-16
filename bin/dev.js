@@ -2,7 +2,7 @@ const express = require('express');
 const webpack = require('webpack');
 const middleware = require('webpack-dev-middleware');
 const serverSideAppContent = require('../src/server').default;
-const serverMiddware = require('../src/helpers/serverMiddware').default;
+const serverMiddleware = require('../src/helpers/serverMiddleware').default;
 
 const config = require('../webpack.config.js');
 const compiler = webpack(config({ mode: 'development' }));
@@ -20,7 +20,7 @@ app.get('/admin', async function (req, res) {
     res.end('admin site');
 });
 
-app.use(serverMiddware());
+app.use(serverMiddleware());
 
 // use get func instead of middware use func to prevent double call func callback in router
 app.get('/:name', function (req, res) {
