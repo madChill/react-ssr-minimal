@@ -22,7 +22,7 @@ clone the repository then:
 
 `npm run build` (to build the code)
 
-`npm run prod` (to run the code production after build)
+`npm run start` (to run the code production after build)
 
 ## Explanation
 

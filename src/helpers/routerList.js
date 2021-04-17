@@ -1,5 +1,6 @@
 const route = {
     HOME: '/',
-    USERS: '/users'
+    USERS: '/users',
+    DEMO: '/demo'
 };
 export default route;

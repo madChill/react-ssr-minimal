@@ -23,7 +23,7 @@ app.get('/admin', async function (req, res) {
 app.use(serverMiddleware());
 
 // use get func instead of middware use func to prevent double call func callback in router
-app.get('/:name', function (req, res) {
+app.use(function (req, res) {
     const content = serverSideAppContent({
         hash: res.locals.webpack.devMiddleware.stats.hash,
         req

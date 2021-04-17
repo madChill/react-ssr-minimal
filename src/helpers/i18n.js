@@ -4,7 +4,7 @@ const rules = {
     service404: {
         en: 'service not found',
         cn: '无法提供服务',
-        default: 'null'
+        default: 'service not found'
     }
 };
 const i18n = {};

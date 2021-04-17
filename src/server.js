@@ -15,10 +15,9 @@ const serverSideApp = ({ hash, req }) => {
     return `
     <!DOCTYPE html>
       <script>
-          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(
-              /</g,
-              '\\u003c'
-          )}
+          window.__PRELOADED_STATE__ = ${JSON.stringify(
+              preloadedState || {}
+          ).replace(/</g, '\\u003c')}
         </script>
         <link rel="icon" href="/public/favicon.ico" />
       ${content}
