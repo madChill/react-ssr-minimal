@@ -101,3 +101,35 @@ export const mapStateToProps = (state) => {
 const withConnect = connect(mapStateToProps);
 export default withConnect(Home);
 ```
+
+## Styles
+
+with styled-component.
+
+```javascript
+import styled from 'styled-components';
+const Header = styled.div`
+    background-color: #46494f !important;
+`;
+export default () => {
+    return (
+        <div className={'header'}>
+            <Header>this is test header1</Header>
+        </div>
+    );
+};
+```
+
+style uses css or scss, we use css-loader. You just need import css file on top of js source.
+
+```javascript
+import React from 'react';
+// style
+import './footer.css';
+//or
+import './footer1.scss';
+
+export default () => {
+    return <div>footer</div>;
+};
+```

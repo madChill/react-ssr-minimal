@@ -1,11 +1,6 @@
 import React from 'react';
-// import './style.css';
-
-// const BackGround = styled.div`
-//     background-color: '#46494f';
-//     height: '88px';
-// `;
+import './footer1.scss';
 
 export default () => {
-    return <div className={''}>this is test header</div>;
+    return <div className="footer">this is test header</div>;
 };

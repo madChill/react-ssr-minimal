@@ -26,8 +26,17 @@ module.exports = (env) => {
         module: {
             rules: [
                 {
-                    test: /\.css$/i,
-                    use: [MiniCssExtractPlugin.loader, 'css-loader'],
+                    test: /\.(css|scss)$/i,
+                    use: [
+                        {
+                            loader: MiniCssExtractPlugin.loader,
+                            options: {
+                                publicPath: '/public/'
+                            }
+                        },
+                        'css-loader',
+                        'sass-loader'
+                    ],
                     exclude: /node_modules/
                 },
                 {
@@ -53,7 +62,9 @@ module.exports = (env) => {
                 patterns: [{ from: 'public', to: 'public' }]
             }),
             new MiniCssExtractPlugin({
-                linkType: 'text/css'
+                linkType: 'text/css',
+                chunkFilename: '[id].css',
+                filename: 'public/[hash].[name].css'
             }),
             new NodemonPlugin({
                 script: './webpack/dist/server.js',
