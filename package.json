@@ -5,13 +5,9 @@
     "main": "index.js",
     "homepage": ".",
     "scripts": {
-        "dev": "nodemon --inspect -x \"npm run build\" --exec babel-node bin/dev.js",
-        "dev2": "npx webpack --watch --env development --config webpack/webpack.dev.js",
-        "client": "npx webpack serve  --config webpack.client.js ",
-        "build": "npx webpack --env production --config webpack.config.js",
-        "watch": "npx webpack --watch --env development --config webpack.config.js",
-        "debug": "npx webpack  --env development --config webpack.config.js && nodemon dist/server.js",
-        "start": "npx webpack --env production --config webpack.config.js && nodemon dist/server.js",
+        "dev": "npx webpack --watch --env development --config webpack/webpack.dev.js",
+        "build": "npx webpack --env production --config webpack/webpack.config.js",
+        "start": "npx webpack --env production --config webpack/webpack.config.js && nodemon dist/server.js",
         "test": "echo \"No test specified\" && exit 0"
     },
     "devDependencies": {
@@ -28,7 +24,6 @@
         "html-webpack-plugin": "^5.3.1",
         "mini-css-extract-plugin": "^1.5.0",
         "nodemon": "^2.0.7",
-        "nodemon-webpack-plugin": "^4.5.2",
         "sass": "^1.32.10",
         "sass-loader": "^11.0.1",
         "style-loader": "^2.0.0",

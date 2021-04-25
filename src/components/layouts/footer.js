@@ -2,5 +2,9 @@ import React from 'react';
 import './footer1.scss';
 
 export default () => {
-    return <div className="footer">this is test header</div>;
+    return (
+        <div className="footer">
+            <img src="/public/images/events.png"></img>
+        </div>
+    );
 };

@@ -1,10 +1,10 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
-const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
+// const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
+const NodemonPlugin = require('./plugin/nodemonRunner');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { loader } = require('mini-css-extract-plugin');
-
-module.exports = (env) => {
+module.exports = () => {
     return {
         mode: 'development',
         target: 'node',
@@ -20,7 +20,7 @@ module.exports = (env) => {
                     ? '[name].js'
                     : 'public/[hash].[name].js';
             },
-            path: path.resolve(__dirname, 'dist'),
+            path: path.resolve(__dirname, '../dist'),
             hashSalt: Math.random().toString()
         },
         module: {
@@ -67,11 +67,12 @@ module.exports = (env) => {
                 filename: 'public/[hash].[name].css'
             }),
             new NodemonPlugin({
-                script: './webpack/dist/server.js',
-                watch: path.resolve('./webpack/dist'),
+                script: './dist/server.js',
+                watch: path.resolve('./dist'),
                 env: {
                     NODE_ENV: 'development'
-                }
+                },
+                sourceMaps: true
             })
         ]
     };
