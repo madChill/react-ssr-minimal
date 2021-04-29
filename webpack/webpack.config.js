@@ -1,17 +1,15 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = (env) => {
-    const pathServer = env.production ? './bin/prod.js' : './src/server.js';
-    const devtool = env.production ? {} : { devtool: 'inline-source-map' };
-    const mode = env.production ? 'production' : 'development';
+module.exports = () => {
     return {
-        mode,
+        mode: 'production',
         target: 'node',
         cache: false,
         entry: {
             client: './src/client.js',
-            server: pathServer
+            server: './index.js'
         },
         output: {
             filename: function (pathData) {
@@ -19,14 +17,24 @@ module.exports = (env) => {
                     ? '[name].js'
                     : 'public/[hash].[name].js';
             },
-            path: path.resolve(__dirname, 'dist'),
+            path: path.resolve(__dirname, '../dist'),
             hashSalt: Math.random().toString()
         },
         module: {
             rules: [
                 {
-                    test: /\.css$/i,
-                    use: ['style-loader', 'css-loader']
+                    test: /\.(css|scss)$/i,
+                    use: [
+                        {
+                            loader: MiniCssExtractPlugin.loader,
+                            options: {
+                                publicPath: '/public/'
+                            }
+                        },
+                        'css-loader',
+                        'sass-loader'
+                    ],
+                    exclude: /node_modules/
                 },
                 {
                     test: /\.(js|mjs|jsx)$/,
@@ -49,8 +57,12 @@ module.exports = (env) => {
         plugins: [
             new CopyPlugin({
                 patterns: [{ from: 'public', to: 'public' }]
+            }),
+            new MiniCssExtractPlugin({
+                linkType: 'text/css',
+                chunkFilename: '[id].css',
+                filename: 'public/[hash].[name].css'
             })
-        ],
-        ...devtool
+        ]
     };
 };

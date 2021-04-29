@@ -1,16 +1,14 @@
 const express = require('express');
-const serverSideAppContent = require('../src/server').default;
-const serverMiddleware = require('../src/helpers/serverMiddleware').default;
-
+const serverSideAppContent = require('./src/server').default;
+const serverMiddleware = require('./src/helpers/serverMiddleware').default;
 const app = express();
 app.get('/server.js', function (req, res) {
     res.writeHeader(200, { 'Content-Type': 'text/html' });
-    res.end('admin site');
+    res.end('admin sit11e');
 });
 app.use(express.static(__dirname));
 app.use(serverMiddleware());
-
-app.get('/:name', function (req, res) {
+app.use(function (req, res) {
     const content = serverSideAppContent({
         hash: __webpack_hash__,
         req

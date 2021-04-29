@@ -1,5 +1,8 @@
 {
-    "ignore": [
-      "**/*.test.js"
-    ]
-  }
+  "ignore": [
+    // "**/*.test.js",
+  ],
+  "presets": [
+    "@babel/preset-react"
+  ]
+}

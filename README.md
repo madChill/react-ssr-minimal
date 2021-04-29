@@ -22,15 +22,16 @@ clone the repository then:
 
 `npm run build` (to build the code)
 
-`npm run prod` (to run the code production after build)
+`npm run start` (to run the code production after build)
 
 ## Explanation
 
 For development mode we get run is `bin/dev.js` and then initiates 'server.js' in /src folder
 
-## Routing and Server side effect before render.
+## scenario render and Routing.
 
-For server side, to server side effect we use express router, middleware.
+Server side effect before render
+For server side, server side effect we use express router, middleware.
 After get context Data from express middleware, we'll create init store and provide to React App.
 We use React router dom to client side and render content server side after express middleware is done.
 
@@ -100,4 +101,68 @@ export const mapStateToProps = (state) => {
 
 const withConnect = connect(mapStateToProps);
 export default withConnect(Home);
+```
+
+## Styles
+
+with styled-component.
+
+```javascript
+import styled from 'styled-components';
+const Header = styled.div`
+    background-color: #46494f !important;
+`;
+export default () => {
+    return (
+        <div className={'header'}>
+            <Header>this is test header1</Header>
+        </div>
+    );
+};
+```
+
+style uses css or scss, we use css-loader. You just need import css file on top of js source.
+
+```javascript
+import React from 'react';
+// style
+import './footer.css';
+//or
+import './footer1.scss';
+
+export default () => {
+    return <div>footer</div>;
+};
+```
+
+## Images
+
+Just move your images to public folder and use, for example:
+
+```javascript
+<div className="footer">
+    <img src="/public/images/events.png"></img>
+</div>
+```
+
+## Router
+
+we've divided router in 2 parts, server side with [express router](https://expressjs.com/en/guide/routing.html) but thats only for server middleware loads data before render.
+A another part is client side with [react-router-dom](https://reactrouter.com). So be carefully with some source or third party js module run only client side. You have to make sure with a variable named 'isNode' before like:
+
+```javascript
+export default ({ url = '/' }) => {
+    const props = isNode ? { location: url } : {};
+    const Router = isNode ? StaticRouter : BrowserRouter;
+    return (
+        <Router {...props} location={url}>
+            <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Route exact path="/users" component={HomePage} />
+                <Route path="/demo" component={Demo} />
+                <Route component={NotFound} />
+            </Switch>
+        </Router>
+    );
+};
 ```
