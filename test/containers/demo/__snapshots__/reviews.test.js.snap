@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing Review component is rendered 1`] = `
+<div>
+  <img
+    alt=""
+    src="IMAGE_MOCK"
+  />
+  review111ssdd pa11geddd1=======+=== 11 ss
+</div>
+`;

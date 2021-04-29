@@ -7,7 +7,7 @@ import App from './containers/App';
 import HtmlHelmet from './helpers/htmlTemplate';
 import storeConfig from './helpers/store/server';
 
-const serverSideApp = ({ hash, req }) => {
+const serverSideApp = ({ hash, req } = { hash: '', req: {} }) => {
     const clientFile = `/public/${hash}.client.js`;
     const cssFile = `/public/${hash}.client.css`;
     const preloadedState = req.SSRData;

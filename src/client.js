@@ -8,8 +8,7 @@ import App from './containers/App';
 
 const preloadedState = window.__PRELOADED_STATE__;
 const store = storeConfig({ SSRData: preloadedState });
-
-console.log(preloadedState, '=============preloadedState++========');
+// console.log(preloadedState, '=============preloadedState++========');
 ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
